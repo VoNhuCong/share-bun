@@ -1,31 +1,50 @@
 import { CommonResponse } from "../classes/CommonResponse"
+import User from "../database/models/User";
 
 
 const CreateUser = async (req: Request) => {
     const data = await req.json();
-    console.log("Received JSON:", data);
-    let res = {
-        name: "Lap trinh bun"
+    console.log(data)
+
+    let user = {
+        username: data.username,
+        email: data.email
     }
-    return new CommonResponse(true, res)
+
+    let result = await User.create(user)
+
+    return new CommonResponse(true, result)
 }
 
 const GetUser = async (req: Request) => {
-    const data = await req.json();
-    console.log("Received JSON:", data);
-    return new CommonResponse(true, data)
+
+    let users = await User.findAll()
+
+    return new CommonResponse(true, users)
 }
 
 const UpdateUser = async (req: Request) => {
     const data = await req.json();
-    console.log("Received JSON:", data);
-    return new CommonResponse(true, data)
+    let userID = data.userId
+    let newEmail = data.email
+    let result = await User.update({
+        email: newEmail
+    }, { where: { id: userID } })
+
+    return new CommonResponse(true, result)
 }
 
 const DeleteUser = async (req: Request) => {
+
+
     const data = await req.json();
-    console.log("Received JSON:", data);
-    return new CommonResponse(true, data)
+    let userId = data.userId
+
+    let result = await User.destroy({
+        where: { id: userId }
+    })
+    console.log("ket qua", result)
+    return new CommonResponse(true, {})
 }
 
 

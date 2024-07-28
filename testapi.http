@@ -19,10 +19,23 @@ POST http://localhost:3000/create-user
 Content-Type: application/json
 
 {
-  "some": "vonhucong",
-  "for": "you"
+  "username": "nguyenvana",
+  "email": "a@gmail.com"
 }
 
+###
+GET http://localhost:3000/get-user
+
+
+
+###
+POST http://localhost:3000/update-user
+Content-Type: application/json
+
+{
+  "id": "e27cc82c-9eca-40cf-90ce-af704a2f21e4",
+  "email": "abcd@gmail.com"
+}
 
 
 
