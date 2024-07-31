@@ -1,5 +1,6 @@
 import { CommonResponse } from "../classes/CommonResponse"
 import User from "../database/models/User";
+import url from 'node:url';
 
 
 const CreateUser = async (req: Request) => {
@@ -16,9 +17,27 @@ const CreateUser = async (req: Request) => {
     return new CommonResponse(true, result)
 }
 
+interface UserIF {
+    id?: string,
+    username?: string,
+    email?: string
+}
+
 const GetUser = async (req: Request) => {
 
-    let users = await User.findAll()
+    let queries = url.parse(req.url, true).query
+
+    let userQueries: UserIF = {}
+    if (queries.email !== undefined) userQueries.email = String(queries.email)
+    if (queries.userID !== undefined) userQueries.id = String(queries.userID)
+    if (queries.username !== undefined) userQueries.username = String(queries.username)
+
+    console.log(userQueries)
+
+
+    let users = await User.findAll({
+        where: Object(userQueries),
+    })
 
     return new CommonResponse(true, users)
 }

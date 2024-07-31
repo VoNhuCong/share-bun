@@ -25,6 +25,9 @@ Content-Type: application/json
 
 ###
 GET http://localhost:3000/get-user
+    # ?userID=cfd189cf-ec3a-4fe4-ba8a-40f2516f2604
+    # &username=nguyenvana
+    # &email=vncong1108@gmail.com
 
 
 
