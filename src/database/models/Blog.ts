@@ -6,18 +6,19 @@ import {
     PrimaryKey,
     DataType,
     CreatedAt,
-    UpdatedAt
+    UpdatedAt,
+    ForeignKey,
+    BelongsTo
 }
     from 'sequelize-typescript';
-
-import Blog from './Blog';
+import User from './User';
 
 @Table({
     timestamps: true,
-    tableName: 'users',
-    modelName: 'User'
+    tableName: 'blogs',
+    modelName: 'Blog'
 })
-class User extends Model {
+class Blog extends Model {
     @Column({
         primaryKey: true,
         type: DataType.STRING(36),
@@ -28,15 +29,14 @@ class User extends Model {
     @Column({
         type: DataType.STRING(45),
     })
-    declare username: string
+    declare content: string
 
-    @Column({
-        type: DataType.STRING(45),
-    })
-    declare email: string
+    @ForeignKey(() => User)
+    @Column
+    userId?: number;
 
-    @HasMany(() => Blog)
-    blogs?: Blog[];
+    @BelongsTo(() => User)
+    author?: Object;
 
     @CreatedAt
     declare createdAt: Date
@@ -46,4 +46,4 @@ class User extends Model {
 }
 
 
-export default User
+export default Blog

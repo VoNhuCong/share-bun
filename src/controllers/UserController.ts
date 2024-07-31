@@ -1,4 +1,5 @@
 import { CommonResponse } from "../classes/CommonResponse"
+import Blog from "../database/models/Blog";
 import User from "../database/models/User";
 import url from 'node:url';
 
@@ -35,8 +36,13 @@ const GetUser = async (req: Request) => {
     console.log(userQueries)
 
 
-    let users = await User.findAll({
-        where: Object(userQueries),
+    // let users = await User.findAll({
+    //     where: Object(userQueries),
+    //     include: Blog
+    // })
+
+    let users = await Blog.findAll({
+        include: User
     })
 
     return new CommonResponse(true, users)
